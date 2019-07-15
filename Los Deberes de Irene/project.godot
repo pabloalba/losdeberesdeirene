@@ -19,6 +19,10 @@ config/name="Los Deberes de Irene"
 run/main_scene="res://Browser.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+global="*res://global.gd"
+
 [display]
 
 window/size/width=1366
