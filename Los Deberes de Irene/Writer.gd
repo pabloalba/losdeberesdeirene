@@ -3,12 +3,6 @@ extends Node2D
 const DOCUMENT_WIDTH = 1265
 const HEIGHT = 768
 const CAMERA_SPEED = 1000
-const COLOR_RED = Color(255, 0, 0)
-const COLOR_BLUE = Color(0, 0, 255)
-const COLOR_BLACK = Color(0, 0, 0)
-const FONT_SMALL = 24
-const FONT_MEDIUM = 48
-const FONT_BIG = 96
 
 
 var target_width
@@ -17,28 +11,32 @@ var cursor
 var labels
 var current_label
 var current_label_num
-var current_color = COLOR_BLACK
-var current_font = FONT_MEDIUM
+var current_color = global.BLACK
+var current_font = global.MEDIUM
 var label_scene = preload("res://LabelCustomizable.tscn")
 
 
 func _ready():
-	load_docuemnt()
+	load_document()
 	set_process_input(true)
 	cursor = get_node("Cursor")
 	cursor.set_as_toplevel(true)
-	labels = _load_labels()
+	labels = global.load_labels()
 	if len(labels) > 0:
-		current_label = labels[0]		
+		for label in labels:
+			add_child(label)
+		current_label = labels[0]
+		current_label_num = 0
+		current_color = current_label.color
+		current_font = current_label.size
+		update_color_and_size()	
+		
 	else:				
 		_move_cursor(200, 200)
 	update_cursor_position()
 	
-func _load_labels():
-	return []
-
 	
-func load_docuemnt():
+func load_document():
 	var texture
 	if global.current_file.ends_with(".jpg"):
 		texture = global.load_jpg(global.current_file)
@@ -73,11 +71,13 @@ func _input(event):
 		
 func _on_letter_pressed(l):
 	current_label.set_text(current_label.get_text() + l)
+	global.save_labels(labels)
 	
 func _on_backspace_pressed():
 	var size = len(current_label.get_text())
 	if size > 0:
 		current_label.set_text(current_label.get_text().substr(0, size - 1))
+		global.save_labels(labels)
 	
 func change_selected_label(inc):
 	if len(labels) > 1:
@@ -101,9 +101,9 @@ func change_selected_label(inc):
 		current_label.select()
 		current_color = current_label.color
 		current_font = current_label.size
-		update_color_and_size()
-		
+		update_color_and_size()		
 		update_cursor_position()
+		global.save_labels(labels)
 	
 func _process(delta):	
 	if Input.is_action_pressed("ui_up") or get_node("CanvasLayer/Panel/VBoxContainer/ButtonUp").is_pressed():
@@ -124,21 +124,21 @@ func _create_label():
 	add_child(label)
 	current_label = label	
 	current_label_num = len(labels) -1
-	update_color_and_size()
+	update_color_and_size()	
 		
 func update_color_and_size():
-	if current_color == COLOR_BLACK:
+	if current_color == global.BLACK:
 		go_black()
-	elif current_color == COLOR_BLUE:
+	elif current_color == global.BLUE:
 		go_blue()
-	elif current_color == COLOR_RED:
+	elif current_color == global.RED:
 		go_red()
 		
-	if current_font == FONT_SMALL:
+	if current_font == global.SMALL:
 		go_small()
-	elif current_font == FONT_MEDIUM:
+	elif current_font == global.MEDIUM:
 		go_medium()
-	elif current_font == FONT_BIG:
+	elif current_font == global.BIG:
 		go_big()
 	
 func _move_cursor(x, y):
@@ -154,6 +154,7 @@ func _move_cursor(x, y):
 		
 		current_label.position.x = cursor.position.x
 		current_label.position.y = cursor.position.y
+		global.save_labels(labels)
 		
 			
 	
@@ -164,49 +165,55 @@ func update_cursor_position():
 func go_black():
 	current_label.go_black()
 	cursor.go_black()
-	current_color = COLOR_BLACK
+	current_color = global.BLACK
+	global.save_labels(labels)
 	
 	
 func go_blue():
 	current_label.go_blue()
 	cursor.go_blue()
-	current_color = COLOR_BLUE
+	current_color = global.BLUE
+	global.save_labels(labels)
 	
 func go_red():
 	current_label.go_red()
 	cursor.go_red()
-	current_color = COLOR_RED
+	current_color = global.RED
+	global.save_labels(labels)
 	
 func go_small():	
 	current_label.go_small()
 	cursor.go_small()
 	# center
-	if current_font == FONT_MEDIUM:
+	if current_font == global.MEDIUM:
 		current_label.position.y += 20
-	elif current_font == FONT_BIG:
+	elif current_font == global.BIG:
 		current_label.position.y += 55
 	update_cursor_position()
-	current_font = FONT_SMALL
+	current_font = global.SMALL
+	global.save_labels(labels)
 	
 func go_medium():
 	current_label.go_medium()
 	cursor.go_medium()
-	if current_font == FONT_SMALL:
+	if current_font == global.SMALL:
 		current_label.position.y -= 20
-	elif current_font == FONT_BIG:
+	elif current_font == global.BIG:
 		current_label.position.y += 35
 	update_cursor_position()
-	current_font = FONT_MEDIUM
+	current_font = global.MEDIUM
+	global.save_labels(labels)
 	
 func go_big():
 	current_label.go_big()
 	cursor.go_big()
-	if current_font == FONT_SMALL:
+	if current_font == global.SMALL:
 		current_label.position.y -= 55
-	elif current_font == FONT_MEDIUM:
+	elif current_font == global.MEDIUM:
 		current_label.position.y -= 35
 	update_cursor_position()
-	current_font = FONT_BIG
+	current_font = global.BIG
+	global.save_labels(labels)
 
 func _on_ButtonBlack_pressed():
 	go_black()

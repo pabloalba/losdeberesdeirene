@@ -57,7 +57,7 @@ func _list_files_in_directory(path):
 		var file = dir.get_next()
 		if file == "":
 			break
-		elif not file.begins_with(".") and file != "icon.png":
+		elif not file.begins_with(".") and not file.ends_with(".lddi")  and file != "icon.png":
 			files.append(file)
 			
 	dir.list_dir_end()

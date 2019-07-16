@@ -2,8 +2,17 @@ extends Node
 
 const LABEL_CURSOR_FIX = 1
 
+
+const RED = 0
+const BLUE = 1
+const BLACK = 2
+const SMALL = 24
+const MEDIUM = 48
+const BIG = 96
+
 var current_path = "user://"
 var current_file
+var label_scene = preload("res://LabelCustomizable.tscn")
 
 
 	
@@ -37,4 +46,39 @@ func go_to_writer_scene():
 	
 func go_to_browser_scene():
 	get_tree().change_scene("res://Browser.tscn")
+	
+
+func save_labels(labels):
+	var labels_data = generate_labels_data(labels)
+	var save_file = File.new()
+	if save_file.open(global.current_file + ".lddi", File.WRITE) == OK: # If the opening of the save file returns OK	
+		save_file.store_var(labels_data) # then we store the contents of the var save inside it
+		save_file.close() # and we gracefully close the file :)
+
+func load_labels():
+	var labels = []
+	
+	var save_file = File.new() # We initialize the File class
+	if save_file.open(global.current_file + ".lddi", File.READ_WRITE) == OK: # If the opening of the save file returns OK
+		var labels_data # we create a temporary var to hold the contents of the save file
+		labels_data = save_file.get_var() # we get the contents of the save file and store it on TEMP_D
+		save_file.close()
+		labels = process_labels_data(labels_data)		
+		
+	return labels
+	
+func process_labels_data(labels_data):	
+	var labels = []
+	for data in labels_data:
+		var label = label_scene.instance()
+		label.from_serialization(data)
+		labels.append(label)
+	return labels
+		
+	
+func generate_labels_data(labels):
+	var labels_data = []
+	for label in labels:		
+		labels_data.append(label.serialize())
+	return labels_data
 	
