@@ -50,10 +50,11 @@ func go_to_browser_scene():
 
 func save_labels(labels):
 	var labels_data = generate_labels_data(labels)
-	var save_file = File.new()
-	if save_file.open(global.current_file + ".lddi", File.WRITE) == OK: # If the opening of the save file returns OK	
-		save_file.store_var(labels_data) # then we store the contents of the var save inside it
-		save_file.close() # and we gracefully close the file :)
+	if len(labels_data) > 0:
+		var save_file = File.new()
+		if save_file.open(global.current_file + ".lddi", File.WRITE) == OK: # If the opening of the save file returns OK	
+			save_file.store_var(labels_data) # then we store the contents of the var save inside it
+			save_file.close() # and we gracefully close the file :)
 
 func load_labels():
 	var labels = []
@@ -78,7 +79,8 @@ func process_labels_data(labels_data):
 	
 func generate_labels_data(labels):
 	var labels_data = []
-	for label in labels:		
-		labels_data.append(label.serialize())
+	for label in labels:	
+		if label.get_text() != "":	
+			labels_data.append(label.serialize())
 	return labels_data
 	

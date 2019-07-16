@@ -29,10 +29,12 @@ func set_text(text):
 
 func _update_width():
 	if label.text != "":
-		background.rect_size.x = font.get_string_size(label.text).x
+		background.rect_size.x = get_width()
 	else:
 		background.rect_size.x = size / 2
-	
+		
+func get_width():
+	return font.get_string_size(label.text).x
 	
 func select():
 	background.visible = true
@@ -108,4 +110,4 @@ func from_serialization(serialization):
 		
 	position.x = serialization["x"]
 	position.y = serialization["y"]
-	
+

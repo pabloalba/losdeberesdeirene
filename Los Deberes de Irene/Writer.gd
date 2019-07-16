@@ -25,17 +25,43 @@ func _ready():
 	if len(labels) > 0:
 		for label in labels:
 			add_child(label)
-		current_label = labels[0]
-		current_label_num = 0
-		current_color = current_label.color
-		current_font = current_label.size
-		update_color_and_size()	
-		
+		select_label_by_num(0)		
 	else:				
 		_move_cursor(200, 200)
-	update_cursor_position()
+		update_cursor_position()
 	
+func _label_selected(label):
+	var num = 0
+	for l in labels:
+		if l == label:
+			select_label_by_num(num)
+			break
+		num += 1	
 	
+func select_label_by_num(num):
+	var old_label = current_label
+	var old_label_num = current_label_num
+	
+	current_label = labels[num]
+	if old_label != current_label:
+		current_label_num = num
+		current_color = current_label.color
+		current_font = current_label.size
+		current_label.select()
+		update_color_and_size()	
+		update_cursor_position()
+				
+		if old_label != null:			
+			old_label.unselect()	
+			
+			#Delete current label if empty
+			if old_label.get_text() == "":
+				labels.erase(old_label)
+				remove_child(old_label)
+				if current_label_num >= old_label_num:
+					current_label_num -= 1
+			
+		
 func load_document():
 	var texture
 	if global.current_file.ends_with(".jpg"):
@@ -54,13 +80,13 @@ func load_document():
 
 
 func _input(event):	
-	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
-		_move_cursor(event.position.x, event.position.y)		
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1 and event.position.x > 110:
+		_click(event.position.x, event.position.y)		
 	elif event.is_action_pressed("ui_cancel"):
 		global.go_to_browser_scene()
-	elif event.is_action_pressed("ui_left"):
+	elif event.is_action_pressed("ui_focus_prev"):
 		change_selected_label(-1)
-	elif event.is_action_pressed("ui_right"):
+	elif event.is_action_pressed("ui_focus_next"):
 		change_selected_label(1)
 	elif event is InputEventKey and event.pressed and not event.echo:
 		if event.scancode == KEY_BACKSPACE:
@@ -81,28 +107,14 @@ func _on_backspace_pressed():
 	
 func change_selected_label(inc):
 	if len(labels) > 1:
-		#Delete current label if empty
-		if current_label.get_text() == "":
-			labels.remove(current_label_num)
-			remove_child(current_label)
-			if inc == 1:
-				current_label_num -= 1
-			
 		#Select new current_label_num
-		current_label_num += inc
-		if current_label_num == -1:
-			current_label_num = len(labels) -1
-		elif current_label_num == len(labels):
-			current_label_num = 0
-
-		#Select new current_label
-		current_label.unselect()		
-		current_label = labels[current_label_num]
-		current_label.select()
-		current_color = current_label.color
-		current_font = current_label.size
-		update_color_and_size()		
-		update_cursor_position()
+		var num = current_label_num +inc
+		if num == -1:
+			num = len(labels) -1
+		elif num == len(labels):
+			num = 0
+		
+		select_label_by_num(num)		
 		global.save_labels(labels)
 	
 func _process(delta):	
@@ -141,25 +153,39 @@ func update_color_and_size():
 	elif current_font == global.BIG:
 		go_big()
 	
+func _click(x, y):
+	var camera_adjust = get_node("Camera2D").position.y - HEIGHT / 2	
+	y = y + camera_adjust
+	var clicked_label
+	for label in labels:
+		if label.position.x < x and x < label.position.x + label.get_width() and \
+			label.position.y < y and y < label.position.y + label.size:
+				clicked_label = label
+				break
+	if clicked_label == null:
+		_move_cursor(x, y)
+	else:
+		_label_selected(clicked_label)
+	
+	
 func _move_cursor(x, y):
-	if x > 110 :		
-		if current_label == null or current_label.get_text() != "":
-			if current_label != null:
-				current_label.unselect()
-			_create_label()
-		
-		var camera_adjust = get_node("Camera2D").position.y - HEIGHT / 2
-		cursor.position.x = x
-		cursor.position.y = y - (cursor.height / 2) + camera_adjust
-		
-		current_label.position.x = cursor.position.x
-		current_label.position.y = cursor.position.y
-		global.save_labels(labels)
+	if current_label == null or current_label.get_text() != "":
+		if current_label != null:
+			current_label.unselect()
+		_create_label()
+	
+	
+	cursor.position.x = x
+	cursor.position.y = y - (cursor.height / 2) 
+	
+	current_label.position.x = cursor.position.x
+	current_label.position.y = cursor.position.y
+	global.save_labels(labels)
 		
 			
 	
 func update_cursor_position():
-	cursor.position.x = current_label.position.x + current_label.font.get_string_size(current_label.get_text()).x
+	cursor.position.x = current_label.position.x + current_label.get_width()
 	cursor.position.y = current_label.position.y
 	
 func go_black():
@@ -237,3 +263,6 @@ func _on_ButtonMedium_pressed():
 
 func _on_ButtonBig_pressed():
 	go_big()
+
+
+	
