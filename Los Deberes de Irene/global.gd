@@ -1,5 +1,7 @@
 extends Node
 
+const LABEL_CURSOR_FIX = 1
+
 var current_path = "user://"
 var current_file
 
@@ -35,3 +37,4 @@ func go_to_writer_scene():
 	
 func go_to_browser_scene():
 	get_tree().change_scene("res://Browser.tscn")
+	

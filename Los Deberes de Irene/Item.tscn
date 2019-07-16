@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Item.gd" type="Script" id=1]
-[ext_resource path="res://assets/fonts/KGNeatlyPrinted.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/woodfordbourne-regular.otf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 size = 96
@@ -15,7 +15,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
-margin_right = 500.0
+margin_right = 521.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 500, 500 )
 rect_clip_content = true
@@ -24,8 +24,8 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_top = 504.0
-margin_right = 500.0
-margin_bottom = 601.0
+margin_right = 521.0
+margin_bottom = 620.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Matemáticas"
