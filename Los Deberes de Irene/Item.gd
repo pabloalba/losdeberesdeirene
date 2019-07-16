@@ -3,6 +3,7 @@ extends Node2D
 
 signal item_selected
 var text = ""
+var bg_file = preload("res://assets/item_file_bg.png")
 
 
 
@@ -27,4 +28,6 @@ func _on_VBoxContainer_gui_input(ev):
 			if ev.pressed:
 				emit_signal("item_selected", text)
 
-
+func set_is_file(is_file):
+	if is_file:
+		get_node("TextureRect").texture = bg_file

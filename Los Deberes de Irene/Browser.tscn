@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Browser.gd" type="Script" id=1]
-[ext_resource path="res://assets/notebook.jpg" type="Texture" id=2]
-[ext_resource path="res://Grid.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/notebook.png" type="Texture" id=2]
+[ext_resource path="res://woodfordbourne48.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/button.png" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/woodfordbourne-regular.otf" type="DynamicFontData" id=5]
+[ext_resource path="res://Grid.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/logo_deberesIrene.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 38
+font_data = ExtResource( 5 )
 
 [node name="Browser" type="Node2D"]
 script = ExtResource( 1 )
@@ -12,11 +20,57 @@ margin_right = 1366.0
 margin_bottom = 768.0
 texture = ExtResource( 2 )
 
+[node name="BGPage" type="ColorRect" parent="."]
+margin_left = 50.0
+margin_right = 1366.0
+margin_bottom = 768.0
+
+[node name="ColorRect" type="ColorRect" parent="BGPage"]
+margin_top = 70.0
+margin_right = 1316.0
+margin_bottom = 76.0
+color = Color( 0.94902, 0.282353, 0.294118, 1 )
+
+[node name="LblTitle" type="Label" parent="BGPage"]
+margin_left = 400.0
+margin_right = 916.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 516, 0 )
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Matemáticas"
+align = 1
+valign = 1
+
+[node name="ButtonBack" type="Button" parent="BGPage"]
+margin_left = 1160.0
+margin_right = 1308.0
+margin_bottom = 69.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+icon = ExtResource( 4 )
+flat = true
+
+[node name="Label" type="Label" parent="BGPage/ButtonBack"]
+margin_left = 27.0102
+margin_top = 7.36642
+margin_right = 116.01
+margin_bottom = 53.3664
+custom_fonts/font = SubResource( 1 )
+text = "Atrás"
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 margin_left = 96.0
-margin_top = 59.0
+margin_top = 100.0
 margin_right = 1303.0
-margin_bottom = 690.0
+margin_bottom = 731.0
 
-[node name="Grid" parent="CenterContainer" instance=ExtResource( 3 )]
+[node name="Grid" parent="CenterContainer" instance=ExtResource( 6 )]
 
+[node name="Logo" type="TextureRect" parent="."]
+margin_left = 175.0
+margin_top = 20.0
+margin_right = 360.0
+margin_bottom = 60.0
+texture = ExtResource( 7 )
+
+[connection signal="pressed" from="BGPage/ButtonBack" to="." method="_on_ButtonBack_pressed"]

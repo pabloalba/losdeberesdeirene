@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Los Deberes de Irene"
-run/main_scene="res://Browser.tscn"
+run/main_scene="res://Start.tscn"
 config/icon="res://icon.png"
 
 [autoload]

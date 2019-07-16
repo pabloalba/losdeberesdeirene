@@ -2,8 +2,8 @@ extends Node2D
 
 const WIDTH = 1200
 const HEIGHT = 630
-const ITEM_WIDTH = 500
-const ITEM_HEIGHT = 600
+const ITEM_WIDTH = 430
+const ITEM_HEIGHT = 430
 const MAX_ITEMS_BY_PAGE = 6
 
 var num_rows = 1
@@ -35,15 +35,15 @@ func resize_grid():
 	elif len(items) == 4:
 		num_rows = 2
 		num_columns = 2
-		scale_childs = 0.5
+		scale_childs = 0.7
 	elif len(items) == 5:
 		num_rows = 2
 		num_columns = 3
-		scale_childs = 0.5
+		scale_childs = 0.7
 	elif len(items) >= 6:
 		num_rows = 2
 		num_columns = 3
-		scale_childs = 0.5	
+		scale_childs = 0.7	
 	move_items()
 	
 func clear():

@@ -10,7 +10,9 @@ const SMALL = 24
 const MEDIUM = 48
 const BIG = 96
 
-var current_path = "user://"
+const START_PATH = "user://"
+
+var current_path = START_PATH
 var current_file
 var label_scene = preload("res://LabelCustomizable.tscn")
 

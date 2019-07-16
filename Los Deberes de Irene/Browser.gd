@@ -10,19 +10,27 @@ func _ready():
 	set_process_input(true)
 	
 func load_content():	
+	set_title()
 	var files = _list_files_in_directory(global.current_path)
 		
 	grid.clear()	
 	for file in files:
 		add_item(file, scale)
+	if global.current_path == global.START_PATH:
+		get_node("BGPage").visible = false
+	else:
+		get_node("BGPage").visible = true
 	
 	
 func add_item(text, scale):
 	var texture	
+	var is_file = false
 	if text.ends_with("jpg"):
 		texture = global.load_jpg(global.current_path+"/"+text)
+		is_file = true
 	elif text.ends_with("png"):
 		texture = global.load_png(global.current_path+"/"+text)
+		is_file = true
 	else:
 		# Is it a directory
 		var dir = Directory.new()
@@ -33,6 +41,7 @@ func add_item(text, scale):
 				
 	if texture != null:
 		var item = item_scene.instance()
+		item.set_is_file(is_file)
 		item.init(text, texture)
 		item.connect("item_selected", self, "_item_selected")		
 		grid.add_item(item)
@@ -71,9 +80,22 @@ func _input(event):
 	if event.is_action_pressed("ui_right"):
 		grid.next_page()
 	if event.is_action_pressed("ui_back"):
-		var pos = global.current_path.find_last("/")
-		if pos > 6:
-			global.current_path = global.current_path.substr(0, pos)
-			load_content()
+		go_back()
     
 	
+func set_title():
+	var title = ""
+	var pos = global.current_path.find_last("/")
+	if pos > 6:
+		title = global.current_path.right(pos + 1)
+	get_node("BGPage/LblTitle").text = title
+
+func go_back():
+	var pos = global.current_path.find_last("/")
+	if pos > 6:
+		global.current_path = global.current_path.substr(0, pos)
+		load_content()
+
+
+func _on_ButtonBack_pressed():
+	go_back()
