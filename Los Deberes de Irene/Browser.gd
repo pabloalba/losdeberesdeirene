@@ -3,6 +3,7 @@ extends Node2D
 var item_scene = preload("res://Item.tscn")
 var grid
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	grid = get_node("CenterContainer/Grid")
@@ -12,7 +13,8 @@ func _ready():
 func load_content():	
 	set_title()
 	var files = _list_files_in_directory(global.current_path)
-		
+	get_node("BGPage/BtnPrevPage").visible = false
+	get_node("BGPage/BtnNextPage").visible = len(files) > global.MAX_ITEMS_BY_PAGE
 	grid.clear()	
 	for file in files:
 		add_item(file, scale)
@@ -97,5 +99,17 @@ func go_back():
 		load_content()
 
 
-func _on_ButtonBack_pressed():
+func _on_BtnBack_pressed():
 	go_back()
+
+
+func _on_BtnNextPage_pressed():
+	grid.next_page()
+	get_node("BGPage/BtnPrevPage").visible = grid.current_page > 0
+	get_node("BGPage/BtnNextPage").visible = grid.current_page < grid.max_pages
+
+
+func _on_BtnPrevPage_pressed():
+	grid.previous_page()
+	get_node("BGPage/BtnPrevPage").visible = grid.current_page > 0
+	get_node("BGPage/BtnNextPage").visible = grid.current_page < grid.max_pages

@@ -1,7 +1,7 @@
 extends Node
 
 const LABEL_CURSOR_FIX = 1
-
+const MAX_ITEMS_BY_PAGE = 6
 
 const RED = 0
 const BLUE = 1

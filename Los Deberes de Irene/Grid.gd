@@ -1,16 +1,17 @@
 extends Node2D
 
-const WIDTH = 1200
+const WIDTH = 1105
 const HEIGHT = 630
 const ITEM_WIDTH = 430
 const ITEM_HEIGHT = 430
-const MAX_ITEMS_BY_PAGE = 6
+
 
 var num_rows = 1
 var num_columns = 1
 var items = []
 var scale_childs = 1
 var current_page = 0
+var max_pages
 
 
 # Called when the node enters the scene tree for the first time.
@@ -52,8 +53,9 @@ func clear():
 	items = []
 	current_page = 0
 
-func add_item(item):	
+func add_item(item):
 	items.append(item)
+	max_pages = len(items) / (global.MAX_ITEMS_BY_PAGE)
 	add_child(item)
 	resize_grid()
 	
@@ -65,8 +67,8 @@ func move_items():
 	var current_row = 0
 	var current_column = 0
 	var current_item = 0
-	if len(items) > MAX_ITEMS_BY_PAGE:
-		current_item = MAX_ITEMS_BY_PAGE * current_page
+	if len(items) > global.MAX_ITEMS_BY_PAGE:
+		current_item = global.MAX_ITEMS_BY_PAGE * current_page
 	
 	var width_item = ITEM_WIDTH * scale_childs
 	var inc_x = (WIDTH - (width_item * num_columns)) / (num_columns + 1)
@@ -89,7 +91,7 @@ func move_items():
 			
 	
 func next_page():
-	if current_page < len(items) / (MAX_ITEMS_BY_PAGE):
+	if current_page < max_pages:
 		current_page += 1
 		move_items()
 		
