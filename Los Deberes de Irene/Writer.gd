@@ -197,6 +197,9 @@ func go_black():
 	cursor.go_black()
 	current_color = global.BLACK
 	global.save_labels(labels)
+	get_node("CanvasLayer/Panel/ButtonBlack").pressed = true
+	get_node("CanvasLayer/Panel/ButtonBlue").pressed = false
+	get_node("CanvasLayer/Panel/ButtonRed").pressed = false
 	
 	
 func go_blue():
@@ -204,12 +207,18 @@ func go_blue():
 	cursor.go_blue()
 	current_color = global.BLUE
 	global.save_labels(labels)
+	get_node("CanvasLayer/Panel/ButtonBlack").pressed = false
+	get_node("CanvasLayer/Panel/ButtonBlue").pressed = true
+	get_node("CanvasLayer/Panel/ButtonRed").pressed = false
 	
 func go_red():
 	current_label.go_red()
 	cursor.go_red()
 	current_color = global.RED
 	global.save_labels(labels)
+	get_node("CanvasLayer/Panel/ButtonBlack").pressed = false
+	get_node("CanvasLayer/Panel/ButtonBlue").pressed = false
+	get_node("CanvasLayer/Panel/ButtonRed").pressed = true
 	
 func go_small():	
 	current_label.go_small()
@@ -221,7 +230,11 @@ func go_small():
 		current_label.position.y += 55
 	update_cursor_position()
 	current_font = global.SMALL
+	get_node("CanvasLayer/Panel/ButtonSmall").pressed = true
+	get_node("CanvasLayer/Panel/ButtonMedium").pressed = false
+	get_node("CanvasLayer/Panel/ButtonBig").pressed = false
 	global.save_labels(labels)
+	
 	
 func go_medium():
 	current_label.go_medium()
@@ -232,6 +245,9 @@ func go_medium():
 		current_label.position.y += 35
 	update_cursor_position()
 	current_font = global.MEDIUM
+	get_node("CanvasLayer/Panel/ButtonSmall").pressed = false
+	get_node("CanvasLayer/Panel/ButtonMedium").pressed = true
+	get_node("CanvasLayer/Panel/ButtonBig").pressed = false
 	global.save_labels(labels)
 	
 func go_big():
@@ -243,6 +259,9 @@ func go_big():
 		current_label.position.y -= 35
 	update_cursor_position()
 	current_font = global.BIG
+	get_node("CanvasLayer/Panel/ButtonSmall").pressed = false
+	get_node("CanvasLayer/Panel/ButtonMedium").pressed = false
+	get_node("CanvasLayer/Panel/ButtonBig").pressed = true
 	global.save_labels(labels)
 
 func _on_ButtonBlack_pressed():
@@ -257,16 +276,38 @@ func _on_ButtonRed_pressed():
 	go_red()
 
 
-func _on_ButtonSmall_pressed():
-	go_small()
-
-
-func _on_ButtonMedium_pressed():
-	go_medium()
-
-
-func _on_ButtonBig_pressed():
-	go_big()
-
 
 	
+
+func _on_ButtonSmall_toggled(button_pressed):
+	if button_pressed:
+		go_small()
+
+
+func _on_ButtonMedium_toggled(button_pressed):
+	if button_pressed:
+		go_medium()
+
+
+func _on_ButtonBig_toggled(button_pressed):
+	if button_pressed:
+		go_big()
+
+
+func _on_ButtonRed_toggled(button_pressed):
+	if button_pressed:
+		go_red()
+
+
+func _on_ButtonBlue_toggled(button_pressed):
+	if button_pressed:
+		go_blue()
+
+
+func _on_ButtonBlack_toggled(button_pressed):
+	if button_pressed:
+		go_black()
+
+
+func _on_ButtonExit_pressed():
+	global.go_to_browser_scene()
