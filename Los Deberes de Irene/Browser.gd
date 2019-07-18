@@ -13,8 +13,8 @@ func _ready():
 func load_content():	
 	set_title()
 	var files = _list_files_in_directory(global.current_path)
-	get_node("BGPage/BtnPrevPage").visible = false
-	get_node("BGPage/BtnNextPage").visible = len(files) > global.MAX_ITEMS_BY_PAGE
+	get_node("BtnPrevPage").visible = false
+	get_node("BtnNextPage").visible = len(files) > global.MAX_ITEMS_BY_PAGE
 	grid.clear()	
 	for file in files:
 		add_item(file, scale)
@@ -97,7 +97,7 @@ func _input(event):
 		grid.previous_page()
 	if event.is_action_pressed("ui_right"):
 		grid.next_page()
-	if event.is_action_pressed("ui_back"):
+	if event.is_action_pressed("ui_back") or event.is_action_pressed("ui_cancel"):
 		go_back()
     
 	
@@ -121,14 +121,14 @@ func _on_BtnBack_pressed():
 
 func _on_BtnNextPage_pressed():
 	grid.next_page()
-	get_node("BGPage/BtnPrevPage").visible = grid.current_page > 0
-	get_node("BGPage/BtnNextPage").visible = grid.current_page < grid.max_pages
+	get_node("BtnPrevPage").visible = grid.current_page > 0
+	get_node("BtnNextPage").visible = grid.current_page < grid.max_pages
 
 
 func _on_BtnPrevPage_pressed():
 	grid.previous_page()
-	get_node("BGPage/BtnPrevPage").visible = grid.current_page > 0
-	get_node("BGPage/BtnNextPage").visible = grid.current_page < grid.max_pages
+	get_node("BtnPrevPage").visible = grid.current_page > 0
+	get_node("BtnNextPage").visible = grid.current_page < grid.max_pages
 
 
 func _on_BtnBack_button_down():

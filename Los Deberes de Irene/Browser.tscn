@@ -6,10 +6,10 @@
 [ext_resource path="res://assets/button.png" type="Texture" id=4]
 [ext_resource path="res://assets/button_pressed.png" type="Texture" id=5]
 [ext_resource path="res://assets/fonts/woodfordbourne-regular.otf" type="DynamicFontData" id=6]
-[ext_resource path="res://assets/next_page.png" type="Texture" id=7]
-[ext_resource path="res://assets/prev_page.png" type="Texture" id=8]
-[ext_resource path="res://Grid.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/logo_deberesIrene.png" type="Texture" id=10]
+[ext_resource path="res://Grid.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/logo_deberesIrene.png" type="Texture" id=8]
+[ext_resource path="res://assets/next_page.png" type="Texture" id=9]
+[ext_resource path="res://assets/prev_page.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 38
@@ -69,39 +69,40 @@ margin_bottom = 50.3664
 custom_fonts/font = SubResource( 1 )
 text = "Atrás"
 
-[node name="BtnNextPage" type="Button" parent="BGPage"]
-margin_left = 1200.0
-margin_top = 530.0
-margin_right = 1306.0
-margin_bottom = 726.0
-focus_mode = 0
-enabled_focus_mode = 0
-icon = ExtResource( 7 )
-flat = true
-
-[node name="BtnPrevPage" type="Button" parent="BGPage"]
-margin_top = 530.0
-margin_right = 106.0
-margin_bottom = 726.0
-focus_mode = 0
-enabled_focus_mode = 0
-icon = ExtResource( 8 )
-flat = true
-
 [node name="CenterContainer" type="CenterContainer" parent="."]
 margin_left = 152.0
 margin_top = 100.0
 margin_right = 1257.0
 margin_bottom = 731.0
 
-[node name="Grid" parent="CenterContainer" instance=ExtResource( 9 )]
+[node name="Grid" parent="CenterContainer" instance=ExtResource( 7 )]
 
 [node name="Logo" type="TextureRect" parent="."]
 margin_left = 175.0
 margin_top = 20.0
 margin_right = 360.0
 margin_bottom = 60.0
-texture = ExtResource( 10 )
+texture = ExtResource( 8 )
+
+[node name="BtnNextPage" type="Button" parent="."]
+margin_left = 1250.0
+margin_top = 530.0
+margin_right = 1356.0
+margin_bottom = 726.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 9 )
+flat = true
+
+[node name="BtnPrevPage" type="Button" parent="."]
+margin_left = 50.0
+margin_top = 530.0
+margin_right = 156.0
+margin_bottom = 726.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 10 )
+flat = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
@@ -110,5 +111,5 @@ current = true
 [connection signal="button_down" from="BGPage/BtnBack" to="." method="_on_BtnBack_button_down"]
 [connection signal="button_up" from="BGPage/BtnBack" to="." method="_on_BtnBack_button_up"]
 [connection signal="pressed" from="BGPage/BtnBack" to="." method="_on_BtnBack_pressed"]
-[connection signal="pressed" from="BGPage/BtnNextPage" to="." method="_on_BtnNextPage_pressed"]
-[connection signal="pressed" from="BGPage/BtnPrevPage" to="." method="_on_BtnPrevPage_pressed"]
+[connection signal="pressed" from="BtnNextPage" to="." method="_on_BtnNextPage_pressed"]
+[connection signal="pressed" from="BtnPrevPage" to="." method="_on_BtnPrevPage_pressed"]
