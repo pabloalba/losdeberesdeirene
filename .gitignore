@@ -17,3 +17,4 @@ Thumbs.db
 *.import
 *.apk
 svg
+**/export
