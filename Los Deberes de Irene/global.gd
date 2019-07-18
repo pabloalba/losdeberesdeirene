@@ -52,11 +52,15 @@ func go_to_browser_scene():
 
 func save_labels(labels):
 	var labels_data = generate_labels_data(labels)
-	if len(labels_data) > 0:
-		var save_file = File.new()
+	var save_file = File.new()
+	if len(labels_data) > 0:		
 		if save_file.open(global.current_file + ".lddi", File.WRITE) == OK: # If the opening of the save file returns OK	
 			save_file.store_var(labels_data) # then we store the contents of the var save inside it
 			save_file.close() # and we gracefully close the file :)
+	else:
+		if save_file.file_exists(global.current_file + ".lddi"):
+			var dir = Directory.new()
+			dir.remove(global.current_file + ".lddi")
 
 func load_labels():
 	var labels = []

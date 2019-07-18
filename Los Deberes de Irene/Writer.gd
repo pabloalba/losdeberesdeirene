@@ -29,6 +29,8 @@ func _ready():
 	else:				
 		_move_cursor(200, 200)
 		update_cursor_position()
+		go_blue()
+		go_medium()
 	
 func _label_selected(label):
 	var num = 0

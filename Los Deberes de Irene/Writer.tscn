@@ -128,9 +128,9 @@ margin_bottom = 631.0
 color = Color( 0.831373, 0.945098, 0.980392, 1 )
 
 [node name="ButtonExit" type="TextureButton" parent="CanvasLayer/Panel"]
-margin_left = 13.0
+margin_left = 19.0
 margin_top = 650.0
-margin_right = 113.0
+margin_right = 119.0
 margin_bottom = 744.0
 focus_mode = 0
 enabled_focus_mode = 0

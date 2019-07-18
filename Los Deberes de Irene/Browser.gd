@@ -27,12 +27,16 @@ func load_content():
 func add_item(text, scale):
 	var texture	
 	var is_file = false
-	if text.ends_with("jpg"):
-		texture = global.load_jpg(global.current_path+"/"+text)
+	var show_bookmark = false
+	if text.ends_with("jpg") or text.ends_with("png"):
 		is_file = true
-	elif text.ends_with("png"):
-		texture = global.load_png(global.current_path+"/"+text)
-		is_file = true
+		var save_file = File.new() # We initialize the File class
+		if save_file.file_exists(global.current_path+"/"+text + ".lddi"):
+			show_bookmark = true
+		if text.ends_with("jpg"):
+			texture = global.load_jpg(global.current_path+"/"+text)
+		else:
+			texture = global.load_png(global.current_path+"/"+text)
 	else:
 		# Is it a directory
 		var dir = Directory.new()
@@ -44,6 +48,7 @@ func add_item(text, scale):
 	if texture != null:
 		var item = item_scene.instance()
 		item.set_is_file(is_file)
+		item.show_bookmark(show_bookmark)
 		item.init(text, texture)
 		item.connect("item_selected", self, "_item_selected")		
 		grid.add_item(item)

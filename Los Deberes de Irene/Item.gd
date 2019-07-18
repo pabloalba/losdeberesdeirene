@@ -42,3 +42,6 @@ func set_is_file(is_file):
 
 func select():
 	get_node("ColorRectSelected").visible = true
+	
+func show_bookmark(show):
+	get_node("TextureRectBookMark").visible = show

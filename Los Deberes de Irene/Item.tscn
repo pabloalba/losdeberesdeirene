@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Item.gd" type="Script" id=1]
 [ext_resource path="res://assets/item_bg.png" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/woodfordbourne-regular.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/bookmark.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -46,10 +47,18 @@ text = "Matemáticas"
 align = 1
 valign = 1
 
+[node name="TextureRectBookMark" type="TextureRect" parent="."]
+visible = false
+margin_left = 375.0
+margin_top = 5.0
+margin_right = 403.0
+margin_bottom = 41.0
+texture = ExtResource( 4 )
+
 [node name="ColorRectSelected" type="ColorRect" parent="."]
 visible = false
 margin_right = 430.0
 margin_bottom = 430.0
-color = Color( 0.0901961, 0.117647, 0.796078, 0.498039 )
+color = Color( 0.862745, 0.952941, 0.980392, 0.498039 )
 
 [connection signal="gui_input" from="VBoxContainer" to="." method="_on_VBoxContainer_gui_input"]
