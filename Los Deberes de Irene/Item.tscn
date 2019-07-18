@@ -38,11 +38,18 @@ stretch_mode = 6
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_top = 298.0
 margin_right = 430.0
-margin_bottom = 371.0
+margin_bottom = 418.0
+rect_min_size = Vector2( 0, 120 )
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Matemáticas"
 align = 1
 valign = 1
+
+[node name="ColorRectSelected" type="ColorRect" parent="."]
+visible = false
+margin_right = 430.0
+margin_bottom = 430.0
+color = Color( 0.0901961, 0.117647, 0.796078, 0.498039 )
 
 [connection signal="gui_input" from="VBoxContainer" to="." method="_on_VBoxContainer_gui_input"]

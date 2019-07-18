@@ -122,9 +122,9 @@ func change_selected_label(inc):
 		global.save_labels(labels)
 	
 func _process(delta):	
-	if Input.is_action_pressed("ui_up") or get_node("CanvasLayer/Panel/VBoxContainer/ButtonUp").is_pressed():
+	if Input.is_action_pressed("ui_up"):
 		_move_camera_up(delta)
-	elif Input.is_action_pressed("ui_down") or get_node("CanvasLayer/Panel/VBoxContainer/ButtonDown").is_pressed():
+	elif Input.is_action_pressed("ui_down"):
 		_move_camera_down(delta)	
     
 func _move_camera_up(delta):

@@ -48,8 +48,11 @@ func add_item(text, scale):
 		item.connect("item_selected", self, "_item_selected")		
 		grid.add_item(item)
 
-func _item_selected(name):
-	# Is it a directory?
+func _item_selected(item):
+	var name = item.text
+	item.select()
+	yield(get_tree().create_timer(0.1), "timeout")
+	# Is it a directory?	
 	var dir = Directory.new()
 	if dir.open(global.current_path + "/" + name) == OK:
 		global.current_path = global.current_path+"/"+name
@@ -59,6 +62,7 @@ func _item_selected(name):
 		global.go_to_writer_scene()
 	
 func _list_files_in_directory(path):
+	var directories = []
 	var files = []
 	var dir = Directory.new()
 	dir.open(path)
@@ -69,11 +73,18 @@ func _list_files_in_directory(path):
 		if file == "":
 			break
 		elif not file.begins_with(".") and not file.ends_with(".lddi")  and file != "icon.png":
-			files.append(file)
-			
-	dir.list_dir_end()
+			# Is it a directory
+			var is_dir = Directory.new()
+			if is_dir.open(path+"/"+file) == OK:	
+				directories.append(file)
+			else:			
+				files.append(file)
+	dir.list_dir_end()	
+	directories.sort()
 	files.sort()
-	return files
+	for f in files:
+		directories.append(f)
+	return directories
 
 
 func _input(event):
@@ -113,3 +124,13 @@ func _on_BtnPrevPage_pressed():
 	grid.previous_page()
 	get_node("BGPage/BtnPrevPage").visible = grid.current_page > 0
 	get_node("BGPage/BtnNextPage").visible = grid.current_page < grid.max_pages
+
+
+func _on_BtnBack_button_down():
+	get_node("BGPage/BtnBack/Label").rect_position.x += 8
+	get_node("BGPage/BtnBack/Label").rect_position.y += 6
+
+
+func _on_BtnBack_button_up():
+	get_node("BGPage/BtnBack/Label").rect_position.x -= 8
+	get_node("BGPage/BtnBack/Label").rect_position.y -= 6

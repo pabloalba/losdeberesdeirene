@@ -1,23 +1,22 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Writer.gd" type="Script" id=1]
-[ext_resource path="res://assets/gui/up.png" type="Texture" id=2]
-[ext_resource path="res://assets/gui/down.png" type="Texture" id=3]
-[ext_resource path="res://woodfordbourne24.tres" type="DynamicFont" id=4]
-[ext_resource path="res://assets/gui/small.png" type="Texture" id=5]
-[ext_resource path="res://assets/gui/small_selected.png" type="Texture" id=6]
-[ext_resource path="res://assets/gui/medium.png" type="Texture" id=7]
-[ext_resource path="res://assets/gui/medium_selected.png" type="Texture" id=8]
-[ext_resource path="res://assets/gui/big.png" type="Texture" id=9]
-[ext_resource path="res://assets/gui/big_selected.png" type="Texture" id=10]
-[ext_resource path="res://assets/gui/black.png" type="Texture" id=11]
-[ext_resource path="res://assets/gui/black_selected.png" type="Texture" id=12]
-[ext_resource path="res://assets/gui/blue.png" type="Texture" id=13]
-[ext_resource path="res://assets/gui/blue_selected.png" type="Texture" id=14]
-[ext_resource path="res://assets/gui/red.png" type="Texture" id=15]
-[ext_resource path="res://assets/gui/red_selected.png" type="Texture" id=16]
-[ext_resource path="res://assets/gui/exit.png" type="Texture" id=17]
-[ext_resource path="res://Cursor.tscn" type="PackedScene" id=18]
+[ext_resource path="res://woodfordbourne24.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/gui/small.png" type="Texture" id=3]
+[ext_resource path="res://assets/gui/small_selected.png" type="Texture" id=4]
+[ext_resource path="res://assets/gui/medium.png" type="Texture" id=5]
+[ext_resource path="res://assets/gui/medium_selected.png" type="Texture" id=6]
+[ext_resource path="res://assets/gui/big.png" type="Texture" id=7]
+[ext_resource path="res://assets/gui/big_selected.png" type="Texture" id=8]
+[ext_resource path="res://assets/gui/black.png" type="Texture" id=9]
+[ext_resource path="res://assets/gui/black_selected.png" type="Texture" id=10]
+[ext_resource path="res://assets/gui/blue.png" type="Texture" id=11]
+[ext_resource path="res://assets/gui/blue_selected.png" type="Texture" id=12]
+[ext_resource path="res://assets/gui/red.png" type="Texture" id=13]
+[ext_resource path="res://assets/gui/red_selected.png" type="Texture" id=14]
+[ext_resource path="res://assets/gui/exit.png" type="Texture" id=15]
+[ext_resource path="res://assets/gui/exit_pressed.png" type="Texture" id=16]
+[ext_resource path="res://Cursor.tscn" type="PackedScene" id=17]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.952941, 0.988235, 1, 1 )
@@ -32,24 +31,6 @@ margin_right = 125.0
 margin_bottom = 768.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
-visible = false
-margin_left = 15.0
-margin_top = 30.0
-margin_right = 110.0
-margin_bottom = 780.0
-
-[node name="ButtonUp" type="Button" parent="CanvasLayer/Panel/VBoxContainer"]
-margin_right = 95.0
-margin_bottom = 86.0
-icon = ExtResource( 2 )
-
-[node name="ButtonDown" type="Button" parent="CanvasLayer/Panel/VBoxContainer"]
-margin_top = 90.0
-margin_right = 95.0
-margin_bottom = 176.0
-icon = ExtResource( 3 )
-
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Panel"]
 margin_left = 120.0
 margin_right = 125.0
@@ -57,11 +38,11 @@ margin_bottom = 768.0
 color = Color( 0.427451, 0.658824, 0.839216, 1 )
 
 [node name="LabelSize" type="Label" parent="CanvasLayer/Panel"]
-margin_top = 30.0
+margin_top = 15.0
 margin_right = 120.0
-margin_bottom = 60.0
+margin_bottom = 45.0
 rect_min_size = Vector2( 120, 0 )
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.137255, 0.403922, 0.576471, 1 )
 text = "tamaño"
 align = 1
@@ -69,30 +50,30 @@ valign = 1
 
 [node name="ButtonSmall" type="TextureButton" parent="CanvasLayer/Panel"]
 margin_left = 19.0
-margin_top = 64.0
+margin_top = 50.0
 margin_right = 114.0
-margin_bottom = 146.0
+margin_bottom = 132.0
+toggle_mode = true
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+
+[node name="ButtonMedium" type="TextureButton" parent="CanvasLayer/Panel"]
+margin_left = 19.0
+margin_top = 132.0
+margin_right = 111.0
+margin_bottom = 214.0
 toggle_mode = true
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 
-[node name="ButtonMedium" type="TextureButton" parent="CanvasLayer/Panel"]
+[node name="ButtonBig" type="TextureButton" parent="CanvasLayer/Panel"]
 margin_left = 19.0
-margin_top = 146.0
-margin_right = 110.0
-margin_bottom = 228.0
+margin_top = 214.0
+margin_right = 111.0
+margin_bottom = 304.0
 toggle_mode = true
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 8 )
-
-[node name="ButtonBig" type="TextureButton" parent="CanvasLayer/Panel"]
-margin_left = 19.0
-margin_top = 228.0
-margin_right = 110.0
-margin_bottom = 318.0
-toggle_mode = true
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 10 )
 
 [node name="Separator1" type="ColorRect" parent="CanvasLayer/Panel"]
 margin_left = 15.0
@@ -106,7 +87,7 @@ margin_top = 330.0
 margin_right = 120.0
 margin_bottom = 360.0
 rect_min_size = Vector2( 120, 0 )
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.137255, 0.403922, 0.576471, 1 )
 text = "color"
 align = 1
@@ -118,8 +99,8 @@ margin_top = 364.0
 margin_right = 114.0
 margin_bottom = 446.0
 toggle_mode = true
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 12 )
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
 
 [node name="ButtonBlue" type="TextureButton" parent="CanvasLayer/Panel"]
 margin_left = 19.0
@@ -127,8 +108,8 @@ margin_top = 446.0
 margin_right = 111.0
 margin_bottom = 528.0
 toggle_mode = true
-texture_normal = ExtResource( 13 )
-texture_pressed = ExtResource( 14 )
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
 
 [node name="ButtonRed" type="TextureButton" parent="CanvasLayer/Panel"]
 margin_left = 19.0
@@ -136,8 +117,8 @@ margin_top = 528.0
 margin_right = 111.0
 margin_bottom = 618.0
 toggle_mode = true
-texture_normal = ExtResource( 15 )
-texture_pressed = ExtResource( 16 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
 
 [node name="Separator2" type="ColorRect" parent="CanvasLayer/Panel"]
 margin_left = 15.0
@@ -146,15 +127,15 @@ margin_right = 101.0
 margin_bottom = 631.0
 color = Color( 0.831373, 0.945098, 0.980392, 1 )
 
-[node name="ButtonExit" type="Button" parent="CanvasLayer/Panel"]
+[node name="ButtonExit" type="TextureButton" parent="CanvasLayer/Panel"]
 margin_left = 13.0
 margin_top = 650.0
 margin_right = 113.0
 margin_bottom = 744.0
 focus_mode = 0
 enabled_focus_mode = 0
-icon = ExtResource( 17 )
-flat = true
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 16 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = 100.0
@@ -172,7 +153,7 @@ drag_margin_top = 0.0
 drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
-[node name="Cursor" parent="." instance=ExtResource( 18 )]
+[node name="Cursor" parent="." instance=ExtResource( 17 )]
 
 [connection signal="toggled" from="CanvasLayer/Panel/ButtonSmall" to="." method="_on_ButtonSmall_toggled"]
 [connection signal="toggled" from="CanvasLayer/Panel/ButtonMedium" to="." method="_on_ButtonMedium_toggled"]

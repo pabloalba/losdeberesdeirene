@@ -14,7 +14,7 @@ const START_PATH = "user://"
 
 var current_path = START_PATH
 var current_file
-var label_scene = preload("res://LabelCustomizable.tscn")
+const label_scene = preload("res://LabelCustomizable.tscn")
 
 
 	
