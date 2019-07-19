@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Browser.gd" type="Script" id=1]
 [ext_resource path="res://assets/notebook.png" type="Texture" id=2]
@@ -9,7 +9,9 @@
 [ext_resource path="res://Grid.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/logo_deberesIrene.png" type="Texture" id=8]
 [ext_resource path="res://assets/next_page.png" type="Texture" id=9]
-[ext_resource path="res://assets/prev_page.png" type="Texture" id=10]
+[ext_resource path="res://assets/next_page_pressed.png" type="Texture" id=10]
+[ext_resource path="res://assets/prev_page.png" type="Texture" id=11]
+[ext_resource path="res://assets/prev_page_pressed.png" type="Texture" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 38
@@ -84,25 +86,25 @@ margin_right = 360.0
 margin_bottom = 60.0
 texture = ExtResource( 8 )
 
-[node name="BtnNextPage" type="Button" parent="."]
-margin_left = 1250.0
+[node name="BtnNextPage" type="TextureButton" parent="."]
+margin_left = 1257.0
 margin_top = 530.0
-margin_right = 1356.0
+margin_right = 1363.0
 margin_bottom = 726.0
 focus_mode = 0
 enabled_focus_mode = 0
-icon = ExtResource( 9 )
-flat = true
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
 
-[node name="BtnPrevPage" type="Button" parent="."]
-margin_left = 50.0
+[node name="BtnPrevPage" type="TextureButton" parent="."]
+margin_left = 70.0
 margin_top = 530.0
-margin_right = 156.0
+margin_right = 176.0
 margin_bottom = 726.0
 focus_mode = 0
 enabled_focus_mode = 0
-icon = ExtResource( 10 )
-flat = true
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
