@@ -16,6 +16,10 @@ func load_content():
 	get_node("BtnPrevPage").visible = false
 	get_node("BtnNextPage").visible = len(files) > global.MAX_ITEMS_BY_PAGE
 	grid.clear()	
+	if len(files) > 0:
+		get_node("NoContent").visible = false
+	else:
+		get_node("NoContent").visible = true
 	for file in files:
 		add_item(file, scale)
 	if global.current_path == global.START_PATH:

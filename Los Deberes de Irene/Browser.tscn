@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Browser.gd" type="Script" id=1]
 [ext_resource path="res://assets/notebook.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://assets/next_page_pressed.png" type="Texture" id=10]
 [ext_resource path="res://assets/prev_page.png" type="Texture" id=11]
 [ext_resource path="res://assets/prev_page_pressed.png" type="Texture" id=12]
+[ext_resource path="res://assets/nocontent.png" type="Texture" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 38
@@ -109,6 +110,36 @@ texture_pressed = ExtResource( 12 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
 current = true
+
+[node name="NoContent" type="CenterContainer" parent="."]
+margin_left = 67.0
+margin_top = 87.0
+margin_right = 1354.0
+margin_bottom = 752.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NoContent"]
+margin_left = 366.0
+margin_top = 193.0
+margin_right = 920.0
+margin_bottom = 471.0
+
+[node name="CenterContainer" type="CenterContainer" parent="NoContent/VBoxContainer"]
+margin_right = 554.0
+margin_bottom = 215.0
+
+[node name="TextureRect" type="TextureRect" parent="NoContent/VBoxContainer/CenterContainer"]
+margin_left = 171.0
+margin_right = 383.0
+margin_bottom = 215.0
+texture = ExtResource( 13 )
+
+[node name="Label" type="Label" parent="NoContent/VBoxContainer"]
+margin_top = 219.0
+margin_right = 554.0
+margin_bottom = 278.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.8, 0.8, 0.8, 1 )
+text = "Aquí no hay deberes todavía"
 
 [connection signal="button_down" from="BGPage/BtnBack" to="." method="_on_BtnBack_button_down"]
 [connection signal="button_up" from="BGPage/BtnBack" to="." method="_on_BtnBack_button_up"]
