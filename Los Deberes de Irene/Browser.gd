@@ -20,9 +20,19 @@ func load_content():
 		add_item(file, scale)
 	if global.current_path == global.START_PATH:
 		get_node("BGPage").visible = false
+		if len(files) == 0:
+			create_sample_directories()
 	else:
 		get_node("BGPage").visible = true
 	
+func create_sample_directories():
+	var dir = Directory.new()
+	dir.open("user://")
+	dir.make_dir("Lengua")
+	dir.make_dir("Matemáticas")
+	dir.copy("res://assets/lengua.png", "user://Lengua/icon.png")
+	dir.copy("res://assets/matematicas.png", "user://Matemáticas/icon.png")
+	load_content()
 	
 func add_item(text, scale):
 	var texture	
