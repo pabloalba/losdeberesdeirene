@@ -31,7 +31,7 @@ func load_content():
 	
 func create_sample_directories():
 	var dir = Directory.new()
-	dir.open("user://")
+	dir.open(global.START_PATH)
 	dir.make_dir("Lengua")
 	dir.make_dir("Matemáticas")
 	dir.copy("res://assets/lengua.png", "user://Lengua/icon.png")

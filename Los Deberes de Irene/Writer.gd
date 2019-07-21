@@ -84,9 +84,9 @@ func load_document():
 func _input(event):	
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1 and event.position.x > 110:
 		_click(event.position.x, event.position.y)	
-	elif event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_UP:	
+	elif event.is_action_pressed("ui_up") or event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_UP:	
 		_move_camera_up(0.05)
-	elif event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_DOWN:	
+	elif event.is_action_pressed("ui_down") or event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_DOWN:	
 		_move_camera_down(0.05)
 	elif event.is_action_pressed("ui_cancel"):
 		global.go_to_browser_scene()
