@@ -83,9 +83,11 @@ func _item_selected(item):
 func _list_files_in_directory(path):
 	var directories = []
 	var files = []
+	var new_files = []
 	var dir = Directory.new()
 	dir.open(path)
 	dir.list_dir_begin()
+	var save_file = File.new() # We initialize the File class
 	
 	while true:
 		var file = dir.get_next()
@@ -96,10 +98,16 @@ func _list_files_in_directory(path):
 			var is_dir = Directory.new()
 			if is_dir.open(path+"/"+file) == OK:	
 				directories.append(file)
-			else:			
-				files.append(file)
+			else:						
+				if save_file.file_exists(global.current_path+"/"+file + ".lddi"):
+					files.append(file)
+				else:
+					new_files.append(file)
 	dir.list_dir_end()	
 	directories.sort()
+	new_files.sort()
+	for f in new_files:
+		directories.append(f)
 	files.sort()
 	for f in files:
 		directories.append(f)
