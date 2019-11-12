@@ -7,8 +7,8 @@ const RED = 0
 const BLUE = 1
 const BLACK = 2
 const SMALL = 24
-const MEDIUM = 48
-const BIG = 96
+const MEDIUM = 36
+const BIG = 48
 
 const START_PATH = "user://"
 

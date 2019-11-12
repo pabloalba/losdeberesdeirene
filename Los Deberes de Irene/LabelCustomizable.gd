@@ -4,9 +4,9 @@ var label
 var color
 var background
 var font
-const FONT_SMALL = preload("res://woodfordbourne24.tres")
-const FONT_MEDIUM = preload("res://woodfordbourne48.tres")
-const FONT_BIG = preload("res://woodfordbourne96.tres")
+const FONT_SMALL = preload("res://escolar24.tres")
+const FONT_MEDIUM = preload("res://escolar36.tres")
+const FONT_BIG = preload("res://escolar48.tres")
 const COLOR_RED = Color(255, 0, 0)
 const COLOR_BLUE = Color(0, 0, 255)
 const COLOR_BLACK = Color(0, 0, 0)

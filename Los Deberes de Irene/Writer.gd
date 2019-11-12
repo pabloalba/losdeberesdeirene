@@ -227,9 +227,9 @@ func go_small():
 	cursor.go_small()
 	# center
 	if current_font == global.MEDIUM:
-		current_label.position.y += 20
+		current_label.position.y += 5
 	elif current_font == global.BIG:
-		current_label.position.y += 55
+		current_label.position.y += 10
 	update_cursor_position()
 	current_font = global.SMALL
 	get_node("CanvasLayer/Panel/ButtonSmall").pressed = true
@@ -242,9 +242,9 @@ func go_medium():
 	current_label.go_medium()
 	cursor.go_medium()
 	if current_font == global.SMALL:
-		current_label.position.y -= 20
+		current_label.position.y -= 5
 	elif current_font == global.BIG:
-		current_label.position.y += 35
+		current_label.position.y += 5
 	update_cursor_position()
 	current_font = global.MEDIUM
 	get_node("CanvasLayer/Panel/ButtonSmall").pressed = false
@@ -256,9 +256,9 @@ func go_big():
 	current_label.go_big()
 	cursor.go_big()
 	if current_font == global.SMALL:
-		current_label.position.y -= 55
+		current_label.position.y -= 10
 	elif current_font == global.MEDIUM:
-		current_label.position.y -= 35
+		current_label.position.y -= 5
 	update_cursor_position()
 	current_font = global.BIG
 	get_node("CanvasLayer/Panel/ButtonSmall").pressed = false

@@ -6,7 +6,7 @@ const BLACK = Color(0, 0, 0)
 const SPEED = 0.5
 var timer
 var colorRect
-var height = 24
+var height = 36
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,17 +30,17 @@ func go_red():
 	colorRect.color = RED
 	
 func go_small():
-	colorRect.rect_size.x = 12
-	colorRect.rect_size.y = 24
-	height = 24
+	colorRect.rect_size.x = global.SMALL / 2
+	colorRect.rect_size.y = global.SMALL
+	height = global.SMALL
 	
 func go_medium():
-	colorRect.rect_size.x = 24
-	colorRect.rect_size.y = 48
-	height = 48
+	colorRect.rect_size.x = global.MEDIUM / 2
+	colorRect.rect_size.y = global.MEDIUM
+	height = global.MEDIUM
 	
 func go_big():
-	colorRect.rect_size.x = 48
-	colorRect.rect_size.y = 96
-	height = 96
+	colorRect.rect_size.x = global.BIG / 2
+	colorRect.rect_size.y = global.BIG
+	height = global.BIG
 
