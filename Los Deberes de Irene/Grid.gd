@@ -37,14 +37,14 @@ func resize_grid():
 		num_rows = 2
 		num_columns = 2
 		scale_childs = 0.7
-	elif len(items) == 5:
+	elif len(items) == 5 or len(items) == 6:
 		num_rows = 2
 		num_columns = 3
 		scale_childs = 0.7
-	elif len(items) >= 6:
+	elif len(items) > 6:
 		num_rows = 2
-		num_columns = 3
-		scale_childs = 0.7	
+		num_columns = 4
+		scale_childs = 0.6	
 	move_items()
 	
 func clear():

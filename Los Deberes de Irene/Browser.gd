@@ -21,7 +21,7 @@ func load_content():
 	else:
 		get_node("NoContent").visible = true
 	for file in files:
-		add_item(file, scale)
+		add_item(file)
 	if global.current_path == global.START_PATH:
 		get_node("BGPage").visible = false
 		if len(files) == 0:
@@ -38,7 +38,7 @@ func create_sample_directories():
 	dir.copy("res://assets/matematicas.png", "user://Matemáticas/icon.png")
 	load_content()
 	
-func add_item(text, scale):
+func add_item(text):
 	var texture	
 	var is_file = false
 	var show_bookmark = false
