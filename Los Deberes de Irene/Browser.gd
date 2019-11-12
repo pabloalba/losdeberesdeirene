@@ -47,10 +47,10 @@ func add_item(text):
 		var save_file = File.new() # We initialize the File class
 		if save_file.file_exists(global.current_path+"/"+text + ".lddi"):
 			show_bookmark = true
-		if text.ends_with("jpg"):
-			texture = global.load_jpg(global.current_path+"/"+text)
-		else:
-			texture = global.load_png(global.current_path+"/"+text)
+		if not save_file.file_exists(global.current_path+"/"+text + ".th"):
+			_generate_thumbnail(text)
+		texture = global.load_png(global.current_path+"/"+text+ ".th")
+		
 	else:
 		# Is it a directory
 		var dir = Directory.new()
@@ -91,7 +91,7 @@ func _list_files_in_directory(path):
 		var file = dir.get_next()
 		if file == "":
 			break
-		elif not file.begins_with(".") and not file.ends_with(".lddi")  and file != "icon.png":
+		elif not file.begins_with(".") and not file.ends_with(".lddi") and not file.ends_with(".th") and file != "icon.png":
 			# Is it a directory
 			var is_dir = Directory.new()
 			if is_dir.open(path+"/"+file) == OK:	
@@ -105,6 +105,12 @@ func _list_files_in_directory(path):
 		directories.append(f)
 	return directories
 
+func _generate_thumbnail(text):
+	var img = Image.new()
+	img.load(global.current_path+"/"+text)
+	var ratio = float(img.get_width()) / float(img.get_height())
+	img.resize(round(global.IMAGE_HEIGHT * ratio), global.IMAGE_HEIGHT)
+	img.save_png(global.current_path+"/"+text+".th")
 
 func _input(event):
 	if event.is_action_pressed("ui_left"):

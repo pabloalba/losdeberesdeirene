@@ -10,6 +10,8 @@ const SMALL = 24
 const MEDIUM = 36
 const BIG = 48
 
+const IMAGE_HEIGHT = 265
+
 const START_PATH = "user://"
 
 var current_path = START_PATH
@@ -17,7 +19,6 @@ var current_file
 const label_scene = preload("res://LabelCustomizable.tscn")
 
 
-	
 func load_jpg(file):
 	var jpg_file = File.new()
 	if jpg_file.file_exists(file):
