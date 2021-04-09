@@ -31,6 +31,8 @@ func load_content():
 	
 func create_sample_directories():
 	var dir = Directory.new()
+	if not dir.dir_exists(global.START_PATH):
+		dir.make_dir(global.START_PATH)
 	dir.open(global.START_PATH)
 	dir.make_dir("Lengua")
 	dir.make_dir("Matemáticas")
@@ -93,7 +95,7 @@ func _list_files_in_directory(path):
 		var file = dir.get_next()
 		if file == "":
 			break
-		elif not file.begins_with(".") and not file.ends_with(".lddi") and not file.ends_with(".th") and file != "icon.png":
+		elif not file.begins_with(".") and not file.ends_with(".lddi") and not file.ends_with(".th") and not file.ends_with("_resuelto.png") and file != "icon.png":
 			# Is it a directory
 			var is_dir = Directory.new()
 			if is_dir.open(path+"/"+file) == OK:	

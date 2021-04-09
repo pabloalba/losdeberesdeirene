@@ -7,6 +7,7 @@ const CAMERA_SPEED = 1000
 
 var target_width
 var target_height
+var current_document_size
 var cursor
 var labels
 var current_label
@@ -71,12 +72,12 @@ func load_document():
 	elif global.current_file.ends_with(".png"):
 		texture = global.load_png(global.current_file)
 		
-	var size = texture.get_size()
+	current_document_size = texture.get_size()
 	target_width = DOCUMENT_WIDTH
-	target_height = (size.y / size.x) * DOCUMENT_WIDTH 
+	target_height = (current_document_size.y / current_document_size.x) * DOCUMENT_WIDTH 
 			
 	get_node("TextureRect").texture = texture
-	get_node("TextureRect").set_scale(Vector2(target_width/size.x, target_height/size.y))
+	get_node("TextureRect").set_scale(Vector2(target_width/current_document_size.x, target_height/current_document_size.y))
 	get_node("Camera2D").position.y = HEIGHT / 2
 	
 
@@ -97,9 +98,11 @@ func _input(event):
 	elif event is InputEventKey and event.pressed and not event.echo:
 		if event.scancode == KEY_BACKSPACE:
 			_on_backspace_pressed()		
+		if event.scancode == KEY_F1:
+			_print()
 		else:			
 			_on_letter_pressed(char(event.unicode))
-		update_cursor_position()
+		update_cursor_position()	
 		
 func _on_letter_pressed(l):
 	current_label.set_text(current_label.get_text() + l)
@@ -313,3 +316,38 @@ func _on_ButtonBlack_toggled(button_pressed):
 
 func _on_ButtonExit_pressed():
 	global.go_to_browser_scene()
+	
+func _print():
+	var file_name = global.current_file.substr(0,global.current_file.length() - 4)+"_resuelto.png"
+	
+	
+	current_label.unselect()
+	var current_camera_position = $Camera2D.position.y
+	var current_scale = $TextureRect.get_scale()
+	
+	$CanvasLayer/Panel.hide()
+	$Camera2D.position.y = 0
+	
+	var full_height = current_document_size.y * current_scale.y
+	var prop = full_height / 768
+	
+	
+	$Camera2D.zoom.x = prop
+	$Camera2D.zoom.y = prop
+	yield(get_tree().create_timer(0.5), "timeout")
+	var image = get_viewport().get_texture().get_data()	
+	image.flip_y()
+	
+	# Remove toolbar
+	image.flip_x()
+	image.crop(image.get_width() - (125 / prop),768)
+	image.flip_x()
+	# Crop the rest
+	image.crop(1366 / prop, 768)
+	image.save_png(file_name)
+	$Camera2D.zoom.x = 1
+	$Camera2D.zoom.y = 1
+	$CanvasLayer/Panel.show()
+	$Camera2D.position.y = current_camera_position
+	$CanvasLayer/Panel.show()
+	current_label.select()

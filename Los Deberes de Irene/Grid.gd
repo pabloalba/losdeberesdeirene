@@ -49,7 +49,7 @@ func resize_grid():
 	
 func clear():
 	for i in range(0, get_child_count()):
-    	get_child(i).queue_free()
+		get_child(i).queue_free()
 	items = []
 	current_page = 0
 

@@ -26,9 +26,9 @@ script = ExtResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -2000.0
-margin_top = -2000.0
+margin_top = -1998.49
 margin_right = 3000.0
-margin_bottom = 3000.0
+margin_bottom = 3001.51
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -36,6 +36,9 @@ margin_bottom = 3000.0
 margin_right = 125.0
 margin_bottom = 768.0
 custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Panel"]
 margin_left = 120.0
@@ -144,23 +147,20 @@ texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 16 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = 100.0
-margin_right = 1365.0
+margin_left = 125.0
+margin_right = 1367.0
 margin_bottom = 768.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 limit_left = 0
 limit_top = 0
-drag_margin_h_enabled = false
-drag_margin_v_enabled = false
 drag_margin_left = 0.0
 drag_margin_top = 0.0
 drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
 [node name="Cursor" parent="." instance=ExtResource( 17 )]
-
 [connection signal="toggled" from="CanvasLayer/Panel/ButtonSmall" to="." method="_on_ButtonSmall_toggled"]
 [connection signal="toggled" from="CanvasLayer/Panel/ButtonMedium" to="." method="_on_ButtonMedium_toggled"]
 [connection signal="toggled" from="CanvasLayer/Panel/ButtonBig" to="." method="_on_ButtonBig_toggled"]

@@ -12,12 +12,33 @@ const BIG = 48
 
 const IMAGE_HEIGHT = 265
 
-const START_PATH = "user://"
+var START_PATH = OS.get_user_data_dir()
+#var START_PATH = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + "deberes"
 
 var current_path = START_PATH
 var current_file
 const label_scene = preload("res://LabelCustomizable.tscn")
 
+
+func load_jpg2(file):
+	var png = file.substr(0,file.length() - 4)+".png"
+	
+	var img = Image.new()
+	img.load(file)
+	img.save_png(png)
+	
+	#var dir = Directory.new()
+	#dir.remove(file)	
+	
+
+	var new_image = Image.new();
+	new_image.load("user://tmp.jpg");
+		
+	var imgtex = ImageTexture.new()
+	imgtex.create_from_image(new_image)
+	return imgtex
+	
+	
 
 func load_jpg(file):
 	var jpg_file = File.new()
