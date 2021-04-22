@@ -12,11 +12,13 @@ const BIG = 48
 
 const IMAGE_HEIGHT = 265
 
-var START_PATH = OS.get_user_data_dir()
+#var START_PATH = OS.get_user_data_dir()
 #var START_PATH = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + "deberes"
+var START_PATH = "/storage/emulated/0/Download/deberes" if OS.get_name() == "Android" else OS.get_user_data_dir()
 
 var current_path = START_PATH
 var current_file
+var current_name = ""
 const label_scene = preload("res://LabelCustomizable.tscn")
 
 
@@ -47,6 +49,7 @@ func load_jpg(file):
 		var bytes = jpg_file.get_buffer(jpg_file.get_len())
 		var img = Image.new()
 		var data = img.load_jpg_from_buffer(bytes)
+		img.generate_mipmaps()
 		var imgtex = ImageTexture.new()
 		imgtex.create_from_image(img)
 		jpg_file.close()
@@ -60,6 +63,7 @@ func load_png(file):
 		var bytes = png_file.get_buffer(png_file.get_len())
 		var img = Image.new()
 		var data = img.load_png_from_buffer(bytes)
+		img.generate_mipmaps()
 		var imgtex = ImageTexture.new()
 		imgtex.create_from_image(img)
 		png_file.close()

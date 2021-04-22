@@ -39,6 +39,20 @@ margin_right = 805.0
 margin_bottom = 527.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Los ficheros se encuentran en la ruta:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelVersion" type="Label" parent="."]
+margin_left = 1279.0
+margin_top = 725.0
+margin_right = 1360.0
+margin_bottom = 751.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "v1.0.04"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Info" type="TextureRect" parent="."]
 margin_left = 495.841

@@ -79,8 +79,10 @@ func _item_selected(item):
 		global.current_path = global.current_path+"/"+name
 		load_content()
 	else:
+		global.current_name = name
 		global.current_file = global.current_path + "/" + name
 		global.go_to_writer_scene()
+		
 	
 func _list_files_in_directory(path):
 	var directories = []

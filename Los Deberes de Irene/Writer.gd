@@ -15,9 +15,16 @@ var current_label_num
 var current_color = global.BLACK
 var current_font = global.MEDIUM
 var label_scene = preload("res://LabelCustomizable.tscn")
-
+var mouse_pressed_y = 0
+var mouse_pressed = false
+var has_been_pan = false
+var share = null # our share singleton instance
 
 func _ready():
+	# initialize the share singleton if it exists
+	if Engine.has_singleton("GodotShare"):
+		share = Engine.get_singleton("GodotShare")
+		
 	load_document()
 	set_process_input(true)
 	cursor = get_node("Cursor")
@@ -72,6 +79,7 @@ func load_document():
 	elif global.current_file.ends_with(".png"):
 		texture = global.load_png(global.current_file)
 		
+		
 	current_document_size = texture.get_size()
 	target_width = DOCUMENT_WIDTH
 	target_height = (current_document_size.y / current_document_size.x) * DOCUMENT_WIDTH 
@@ -84,7 +92,13 @@ func load_document():
 
 func _input(event):	
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1 and event.position.x > 110:
-		_click(event.position.x, event.position.y)	
+		mouse_pressed = true
+		mouse_pressed_y = get_viewport().get_mouse_position().y
+		has_been_pan = false
+	elif event is InputEventMouseButton and !event.pressed and event.button_index == 1 and event.position.x > 110:
+		mouse_pressed = false
+		if !has_been_pan:
+			_click(event.position.x, event.position.y)
 	elif event.is_action_pressed("ui_up") or event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_UP:	
 		_move_camera_up(0.05)
 	elif event.is_action_pressed("ui_down") or event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_DOWN:	
@@ -130,7 +144,15 @@ func _process(delta):
 	if Input.is_action_pressed("ui_up"):
 		_move_camera_up(delta)
 	elif Input.is_action_pressed("ui_down"):
-		_move_camera_down(delta)	
+		_move_camera_down(delta)
+	elif mouse_pressed:
+		var mouse_position = get_viewport().get_mouse_position()
+		var mouse_delta = mouse_pressed_y - mouse_position.y
+		if abs(mouse_delta) > 20:
+			print(str(mouse_delta)+" "+str(mouse_pressed_y)+" "+str(mouse_pressed_y))
+			get_node("Camera2D").position.y = clamp(get_node("Camera2D").position.y + mouse_delta, HEIGHT / 2, target_height - HEIGHT / 2)			
+			mouse_pressed_y = mouse_position.y
+			has_been_pan = true
 	
 func _move_camera_up(delta):
 	get_node("Camera2D").position.y = clamp(get_node("Camera2D").position.y - delta * CAMERA_SPEED, HEIGHT / 2, target_height - HEIGHT / 2)
@@ -162,7 +184,7 @@ func update_color_and_size():
 	elif current_font == global.BIG:
 		go_big()
 	
-func _click(x, y):
+func _click(x, y):	
 	var camera_adjust = get_node("Camera2D").position.y - HEIGHT / 2	
 	y = y + camera_adjust
 	var clicked_label
@@ -315,7 +337,8 @@ func _on_ButtonExit_pressed():
 
 
 func _print():
-	var file_name = global.current_file.substr(0,global.current_file.length() - 4)+"_resuelto.png"
+	var file_name = OS.get_user_data_dir() + "/ficha.png"
+	print(file_name)
 	
 	var img = Image.new()
 	img.load(global.current_file)
@@ -354,3 +377,9 @@ func _print():
 				
 				vport.remove_child(l)
 	img.save_png(file_name)
+	if share != null:
+		share.sharePic(file_name, "Los deberes de Irene", global.current_name, "Esta es la ficha acabada para "+global.current_name)
+
+
+func _on_ButtonShare_pressed():
+	_print()

@@ -5,6 +5,12 @@ func _ready():
 	set_process_input(true)
 	
 	var dir = Directory.new()
+	
+	if OS.get_name() == "Android":
+		dir.open("/storage/emulated/0/Download")
+		dir.make_dir("deberes")
+	
+	
 	if dir.open(global.START_PATH) == OK:
 		get_node("Label").text = dir.get_current_dir ()
 	#var dir = Directory.new()
