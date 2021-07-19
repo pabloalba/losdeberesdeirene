@@ -129,7 +129,7 @@ func _input(event):
 		grid.next_page()
 	if event.is_action_pressed("ui_back") or event.is_action_pressed("ui_cancel"):
 		go_back()
-    
+	
 	
 func set_title():
 	var title = ""

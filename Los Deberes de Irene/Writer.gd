@@ -76,8 +76,8 @@ func load_document():
 	target_width = DOCUMENT_WIDTH
 	target_height = (current_document_size.y / current_document_size.x) * DOCUMENT_WIDTH 
 			
-	get_node("TextureRect").texture = texture
-	get_node("TextureRect").set_scale(Vector2(target_width/current_document_size.x, target_height/current_document_size.y))
+	$TextureRect.texture = texture
+	$TextureRect.set_scale(Vector2(target_width/current_document_size.x, target_height/current_document_size.y))
 	get_node("Camera2D").position.y = HEIGHT / 2
 	
 
@@ -131,7 +131,7 @@ func _process(delta):
 		_move_camera_up(delta)
 	elif Input.is_action_pressed("ui_down"):
 		_move_camera_down(delta)	
-    
+	
 func _move_camera_up(delta):
 	get_node("Camera2D").position.y = clamp(get_node("Camera2D").position.y - delta * CAMERA_SPEED, HEIGHT / 2, target_height - HEIGHT / 2)
 
@@ -280,10 +280,6 @@ func _on_ButtonBlue_pressed():
 func _on_ButtonRed_pressed():
 	go_red()
 
-
-
-	
-
 func _on_ButtonSmall_toggled(button_pressed):
 	if button_pressed:
 		go_small()
@@ -316,38 +312,45 @@ func _on_ButtonBlack_toggled(button_pressed):
 
 func _on_ButtonExit_pressed():
 	global.go_to_browser_scene()
-	
+
+
 func _print():
 	var file_name = global.current_file.substr(0,global.current_file.length() - 4)+"_resuelto.png"
 	
+	var img = Image.new()
+	img.load(global.current_file)
+	img.convert(Image.FORMAT_RGBA8)
 	
-	current_label.unselect()
-	var current_camera_position = $Camera2D.position.y
-	var current_scale = $TextureRect.get_scale()
+	var prop_x = img.get_size().x / target_width
+	var prop_y = img.get_size().y / target_height	
 	
-	$CanvasLayer/Panel.hide()
-	$Camera2D.position.y = 0
-	
-	var full_height = current_document_size.y * current_scale.y
-	var prop = full_height / 768
-	
-	
-	$Camera2D.zoom.x = prop
-	$Camera2D.zoom.y = prop
-	yield(get_tree().create_timer(0.5), "timeout")
-	var image = get_viewport().get_texture().get_data()	
-	image.flip_y()
-	
-	# Remove toolbar
-	image.flip_x()
-	image.crop(image.get_width() - (125 / prop),768)
-	image.flip_x()
-	# Crop the rest
-	image.crop(1366 / prop, 768)
-	image.save_png(file_name)
-	$Camera2D.zoom.x = 1
-	$Camera2D.zoom.y = 1
-	$CanvasLayer/Panel.show()
-	$Camera2D.position.y = current_camera_position
-	$CanvasLayer/Panel.show()
-	current_label.select()
+	if len(labels) > 0:
+		var vport = Viewport.new()
+		vport.transparent_bg = true
+		vport.set_update_mode(Viewport.UPDATE_ALWAYS)
+		add_child(vport)
+		for label in labels:
+			if (label.label.text != ""):
+				var l = label.label.duplicate()
+				l.rect_position.x = 0
+				l.rect_position.y = 0
+				
+				vport.size = label.font.get_string_size(l.text)
+				vport.add_child(l)
+				yield(get_tree(), "idle_frame")
+				yield(get_tree(), "idle_frame") 
+				
+				var vport_img = vport.get_texture().get_data()
+				vport_img.convert(Image.FORMAT_RGBA8)
+				vport_img.flip_y()
+				
+				vport_img.resize(vport_img.get_size().x * prop_x, vport_img.get_size().y * prop_y)			
+				var pos = Vector2((label.position.x - 125) * prop_x, label.position.y * prop_y)
+				
+				img.lock()	
+				img.blend_rect(vport_img, vport_img.get_used_rect(), pos)
+				img.unlock()
+				vport_img.save_png("/tmp/img.png")
+				
+				vport.remove_child(l)
+	img.save_png(file_name)
